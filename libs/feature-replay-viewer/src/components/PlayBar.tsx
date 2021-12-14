@@ -39,7 +39,7 @@ import { ReplayAnalysisEvent } from "@rewind/osu/core";
 import { useObservable } from "rxjs-hooks";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { HelpModalDialog } from "./HelpModal";
-import { DEFAULT_PLAY_BAR_SETTINGS } from "../../../web-player/rewind/src/settings/PlaybarSettings";
+import { DEFAULT_PLAY_BAR_SETTINGS } from "@rewind/web-player/rewind";
 
 const centerUp = {
   anchorOrigin: {

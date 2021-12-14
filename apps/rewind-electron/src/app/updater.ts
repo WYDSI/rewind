@@ -76,7 +76,7 @@ function attachListeners() {
     checkForUpdates();
   });
   ipcMain.handle("quitAndInstall", () => {
-    void autoUpdater.quitAndInstall(true, true);
+    void autoUpdater.quitAndInstall();
   });
 }
 

@@ -90,7 +90,7 @@ export function UpdateModal() {
                   )}
                   {downloadFinished && (
                     <Button variant={"contained"} onClick={() => window.api.quitAndInstall()}>
-                      Restart and install
+                      Quit and install
                     </Button>
                   )}
                 </Stack>

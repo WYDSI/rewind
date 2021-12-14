@@ -1,5 +1,5 @@
 import { useAppSelector } from "./hooks/hooks";
-import { Route, Switch } from "react-router-dom"; // react-router v4/v5
+import { Route, Routes } from "react-router-dom"; // react-router v4/v5
 import { LeftMenuSidebar } from "./LeftMenuSidebar";
 import { SplashScreen } from "./splash/SplashScreen";
 import { SetupScreen } from "./setup/SetupScreen";
@@ -32,10 +32,10 @@ function NormalView() {
       <LeftMenuSidebar />
       <Divider orientation={"vertical"} />
       <Box sx={{ flexGrow: 1, height: "100%" }}>
-        <Switch>
-          <Route exact path={"/home"} render={() => <HomeScreen />} />
-          <Route exact path={"/analyzer"} render={() => <ConnectedAnalyzer />} />
-        </Switch>
+        <Routes>
+          <Route path={"/home"} element={<HomeScreen />} />
+          <Route path={"/analyzer"} element={<ConnectedAnalyzer />} />
+        </Routes>
       </Box>
       <UpdateModal />
     </Stack>
@@ -44,10 +44,10 @@ function NormalView() {
 
 export function RewindApp() {
   return (
-    <Switch>
-      <Route exact path={"/splash"} render={() => <ConnectedSplashScreen />} />
-      <Route exact path={"/setup"} render={() => <ConnectedSetupScreen />} />
-      <Route render={() => <NormalView />} />
-    </Switch>
+    <Routes>
+      <Route path={"/splash"} element={<ConnectedSplashScreen />} />
+      <Route path={"/setup"} element={<ConnectedSetupScreen />} />
+      <Route path={"/*"} element={<NormalView />} />
+    </Routes>
   );
 }

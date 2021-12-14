@@ -14,3 +14,4 @@ export * from "./settings/HUDSettings";
 export * from "./settings/ReplayCursorSettings";
 export * from "./settings/RewindSettings";
 export * from "./settings/SkinSettings";
+export * from "./settings/PlaybarSettings";

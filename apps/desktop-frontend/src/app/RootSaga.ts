@@ -2,7 +2,6 @@ import { call, delay, put, spawn, take } from "redux-saga/effects";
 import { API_BASE_URL } from "./backend/constants";
 import { BackendState, stateChanged } from "./backend/slice";
 import { SagaIterator } from "redux-saga";
-import { push } from "connected-react-router";
 import { RewindTheater } from "@rewind/web-player/rewind";
 
 // TODO: This whole thing should be rewritten
@@ -16,17 +15,24 @@ function* waitForBackendState(state: BackendState): SagaIterator {
   }
 }
 
+function push(to: string) {
+  window.history.pushState({}, "", to);
+}
+
 function* watchForBackendReady(theater: RewindTheater): SagaIterator {
   const { common, analyzer } = theater;
   yield call(waitForBackendState, "READY");
   yield call(common.initialize.bind(common));
   yield call(analyzer.startWatching.bind(analyzer));
-  yield put(push("/analyzer")); // Theater
+  push("/#/analyzer");
+  // yield put(push("/analyzer"));
+  // window.history.pushState({}, "", "/analyzer");
+  // yield put(win("/analyzer")); // Theater
 }
 
 function* watchForBackendMissingSetup(): SagaIterator {
   yield call(waitForBackendState, "SETUP_MISSING");
-  yield put(push("/setup"));
+  push("/setup");
 }
 
 async function fetchStatus(): Promise<BackendState> {

@@ -2,8 +2,7 @@ import { StrictMode } from "react";
 import * as ReactDOM from "react-dom";
 
 import { Provider } from "react-redux";
-import { history, store } from "./app/store";
-import { ConnectedRouter, push } from "connected-react-router";
+import { store } from "./app/store";
 
 import { AppInfoProvider, rewindTheme, TheaterProvider } from "@rewind/feature-replay-viewer";
 import { RewindApp } from "./app/RewindApp";
@@ -12,6 +11,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theater } from "./app/theater";
 import { environment } from "./environments/environment";
 import { downloadFinished, downloadProgressed, newVersionAvailable } from "./app/update/slice";
+import { HashRouter } from "react-router-dom";
 
 /**
  * If the frontend gets started with the `preload.js` (within Electron), then the API should be initialized correctly,
@@ -42,7 +42,8 @@ if (window.api) {
 function attachListeners() {
   api.onManualReplayOpen((file) => {
     // Changes to the analyzer page
-    store.dispatch(push("/analyzer"));
+    // store.dispatch(push("/analyzer"));
+    window.history.pushState({}, "", "/analyzer");
     void theater.analyzer.loadReplay(`local:${file}`);
   });
 
@@ -58,7 +59,7 @@ function attachListeners() {
   });
 }
 
-(async function() {
+(async function () {
   const [appVersion, platform] = await Promise.all([api.getAppVersion(), api.getPlatform()]);
   const appInfo = { appVersion, platform };
 
@@ -71,14 +72,14 @@ function attachListeners() {
     <StrictMode>
       <AppInfoProvider appInfo={appInfo}>
         <Provider store={store}>
-          <ConnectedRouter history={history}>
+          <HashRouter>
             <ThemeProvider theme={rewindTheme}>
               <CssBaseline />
               <TheaterProvider theater={theater}>
                 <RewindApp />
               </TheaterProvider>
             </ThemeProvider>
-          </ConnectedRouter>
+          </HashRouter>
         </Provider>
       </AppInfoProvider>
     </StrictMode>,
@@ -86,5 +87,5 @@ function attachListeners() {
   );
 
   // This starts off with /splash -> Maybe do it somewhere else?
-  store.dispatch(push("/splash"));
+  window.history.pushState({}, "", "/#/splash");
 })();
